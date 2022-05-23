@@ -1,17 +1,28 @@
 <template>
   <li @mouseover="showInfo = true" @mouseleave="showInfo = false">
-    <div class="img-container">
-      <img
-        :src="'https://image.tmdb.org/t/p/w342' + thisShow.backdrop_path"
-        alt=""
-      />
-    </div>
+    <template v-if="thisShow.backdrop_path !== null">
+      <div class="img-container">
+        <img
+          :src="'https://image.tmdb.org/t/p/original' + thisShow.backdrop_path"
+          alt=""
+        />
+      </div>
+    </template>
+    <template v-else>
+      <div class="img-placeholder">
+        <h2>{{ thisShow.name }}</h2>
+      </div>
+    </template>
     <div class="info" :class="showInfo ? '' : 'd-none'">
       <div class="title">
-        <h2>Titolo: {{ thisShow.name }}</h2>
+        <h2>
+          Titolo: <span>{{ thisShow.name }}</span>
+        </h2>
       </div>
       <div class="original-title">
-        <h2>Titolo Originale: {{ thisShow.original_name }}</h2>
+        <h2>
+          Titolo Originale: <span>{{ thisShow.original_name }}</span>
+        </h2>
       </div>
       <div class="lang">
         <template v-if="langFlag(thisShow.original_language).length > 2">
@@ -27,7 +38,9 @@
           </div>
         </template>
         <template v-else>
-          <span>Lingua: {{ thisShow.original_language.toUpperCase() }}</span>
+          <div class="text">
+            <span>Lingua: {{ thisShow.original_language.toUpperCase() }}</span>
+          </div>
         </template>
       </div>
       <div class="rating">
@@ -39,6 +52,11 @@
             :key="index"
           ></i>
         </strong>
+      </div>
+      <div class="overview">
+        <p class="bold">
+          Overview: <small>{{ thisShow.overview }}</small>
+        </p>
       </div>
     </div>
   </li>
@@ -86,39 +104,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li {
-  position: relative;
-  width: 342px;
-  height: 450px;
-  margin: 2rem;
-  cursor: pointer;
-
-  .info {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 98%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;
-
-    .lang {
-      .flag-container {
-        width: 30px;
-        height: 30px;
-        margin: 1rem 0;
-      }
-    }
-
-    .rating {
-      i {
-        margin: 0 2px;
-        color: yellow;
-      }
-    }
-  }
-}
+@import "../style/card_style.scss";
 </style>
