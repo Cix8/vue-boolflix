@@ -43,7 +43,7 @@
           </div>
         </template>
       </div>
-      <div class="rating">
+      <div class="rating" v-if="thisShow.vote_average">
         <strong
           >Voto:
           <i
@@ -53,7 +53,7 @@
           ></i>
         </strong>
       </div>
-      <div class="overview">
+      <div class="overview" v-if="thisShow.overview">
         <p class="bold">
           Overview: <small>{{ thisShow.overview }}</small>
         </p>
