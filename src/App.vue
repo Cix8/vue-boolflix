@@ -4,13 +4,13 @@
     <main>
       <section class="films" v-if="filmsReady">
         <div class="section-title">
-          <h2>FILMS</h2>
+          <h2>Boolflix Films</h2>
         </div>
         <AppFilms :filmsArray="mainFilms" />
       </section>
       <section class="tv-shows" v-if="showsReady">
         <div class="section-title">
-          <h2>TV SHOWS</h2>
+          <h2>Boolflix Tv shows</h2>
         </div>
         <AppTvShows :showsArray="mainTvShows" />
       </section>
@@ -67,11 +67,20 @@ export default {
 <style lang="scss">
 @import "./style/common.scss";
 
-.section-title {
-  padding-top: 3rem;
-  font-size: 3rem;
-  font-weight: bold;
-  color: red;
-  text-align: center;
+#app {
+  min-height: 100vh;
+  background-image: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, 0.8));
+
+  section {
+    width: 90%;
+    margin: 0 auto;
+
+    .section-title {
+      padding-top: 3rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+    }
+  }
 }
 </style>

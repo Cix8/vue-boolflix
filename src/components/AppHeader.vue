@@ -33,7 +33,6 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 40px;
-  background-color: black;
 
   .logo-container {
     color: red;

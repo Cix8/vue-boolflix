@@ -48,7 +48,7 @@
           >Voto:
           <i
             class="fas fa-star"
-            v-for="(star, index) in starRating(parseInt(thisFilm.vote_average))"
+            v-for="(star, index) in starRating(thisFilm.vote_average)"
             :key="index"
           ></i>
         </strong>
@@ -93,7 +93,7 @@ export default {
 
     starRating(vote) {
       let thisArray = [];
-      const formatVote = vote / 2;
+      const formatVote = parseInt(vote) / 2;
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
       }

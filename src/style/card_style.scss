@@ -1,8 +1,10 @@
 li {
+    $width: calc((90vw / 4) - 16px);
     position: relative;
-    width: 350px;
-    height: 530px;
-    margin: 2rem .1rem 0;
+    width: $width;
+    height: calc($width + 180px);
+    margin: 30px 2px 0;
+    border: 1px solid whitesmoke;
     cursor: pointer;
 
     .img-container {
@@ -12,6 +14,7 @@ li {
             height: 100%;
             display: block;
             object-fit: cover;
+            object-position: 40%;
         }
     }
 
@@ -66,6 +69,11 @@ li {
                 margin: 0 2px;
                 color: yellow;
             }
+        }
+
+        .overview {
+            max-height: 300px;
+            overflow-y: auto;
         }
     }
 }
