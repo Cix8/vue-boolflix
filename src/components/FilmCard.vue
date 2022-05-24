@@ -13,7 +13,25 @@
         <h2>{{ thisFilm.title }}</h2>
       </div>
     </template>
-    <div class="info" :class="showInfo ? '' : 'd-none'">
+    <div
+      class="info"
+      :class="showInfo ? '' : 'd-none'"
+      @click="findCastAndGenres(thisFilm.id)"
+    >
+      <div class="details" v-if="showDetails">
+        <div class="cast">
+          <div class="cast-title">Cast:</div>
+          <div v-for="(people, index) in cast" :key="index">
+            {{ people.original_name }}
+          </div>
+        </div>
+        <div class="genre">
+          <div class="genre-title">Genere:</div>
+          <div v-for="(genre, index) in genres" :key="index">
+            {{ genre.name }}
+          </div>
+        </div>
+      </div>
       <div class="title">
         <h2>
           Titolo: <span>{{ thisFilm.title }}</span>
@@ -63,6 +81,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "FilmCard",
   props: {
@@ -70,6 +90,9 @@ export default {
   },
   data() {
     return {
+      cast: [],
+      genres: [],
+      showDetails: false,
       showInfo: false,
     };
   },
@@ -98,6 +121,24 @@ export default {
         thisArray.push("star");
       }
       return thisArray;
+    },
+
+    findCastAndGenres(objId) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${objId}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
+        )
+        .then((resp) => {
+          this.cast = resp.data.cast.splice(0, 5);
+        });
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${objId}?api_key=5281cccae9a725e7baaa26749f7bb197`
+        )
+        .then((res) => {
+          this.genres = res.data.genres;
+          this.showDetails = !this.showDetails;
+        });
     },
   },
 };
