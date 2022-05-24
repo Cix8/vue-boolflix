@@ -2,7 +2,7 @@
   <div id="app">
     <AppHeader
       @getKeyword="searchThis($event)"
-      @getSelectedGenre="fileterContents($event)"
+      @getSelectedGenre="filterContents($event)"
       :theseGenres="genresArray"
     />
     <main>
@@ -16,7 +16,7 @@
         <div class="section-title">
           <h2>Boolflix Tv shows</h2>
         </div>
-        <AppTvShows :showsArray="mainTvShows" />
+        <AppTvShows :showsArray="displayTvShows" />
       </section>
     </main>
   </div>
@@ -77,7 +77,7 @@ export default {
         });
     },
 
-    fileterContents(keyId) {
+    filterContents(keyId) {
       if (keyId !== "") {
         this.displayFilms = this.mainFilms.filter((element) => {
           if (element.genre_ids.length > 0) {
