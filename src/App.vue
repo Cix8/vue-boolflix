@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <AppHeader @getKeyword="searchThis($event)" />
+    <AppHeader
+      @getKeyword="searchThis($event)"
+      @getSelectedGenre="fileterContents($event)"
+      :theseGenres="genresArray"
+    />
     <main>
       <section class="films" v-if="filmsReady">
         <div class="section-title">
           <h2>Boolflix Films</h2>
         </div>
-        <AppFilms :filmsArray="mainFilms" />
+        <AppFilms :filmsArray="displayFilms" />
       </section>
       <section class="tv-shows" v-if="showsReady">
         <div class="section-title">
@@ -33,8 +37,11 @@ export default {
   },
   data() {
     return {
+      genresArray: [],
       mainFilms: [],
+      displayFilms: [],
       mainTvShows: [],
+      displayTvShows: [],
       filmsReady: false,
       showsReady: false,
     };
@@ -48,6 +55,7 @@ export default {
         .then((resp) => {
           console.log(resp.data.results);
           this.mainFilms = resp.data.results;
+          this.displayFilms = this.mainFilms;
           this.filmsReady = true;
         });
       axios
@@ -57,8 +65,46 @@ export default {
         .then((res) => {
           console.log(res.data.results);
           this.mainTvShows = res.data.results;
+          this.displayTvShows = this.mainTvShows;
           this.showsReady = true;
         });
+      axios
+        .get(
+          "https://api.themoviedb.org/3/genre/movie/list?api_key=5281cccae9a725e7baaa26749f7bb197"
+        )
+        .then((resp) => {
+          this.genresArray = resp.data.genres;
+        });
+    },
+
+    fileterContents(keyId) {
+      if (keyId !== "") {
+        this.displayFilms = this.mainFilms.filter((element) => {
+          if (element.genre_ids.length > 0) {
+            for (let i = 0; i < element.genre_ids.length; i++) {
+              if (element.genre_ids[i] == keyId) {
+                return true;
+              }
+            }
+          }
+        });
+      } else {
+        this.displayFilms = this.mainFilms;
+      }
+
+      if (keyId !== "") {
+        this.displayTvShows = this.mainTvShows.filter((element) => {
+          if (element.genre_ids.length > 0) {
+            for (let i = 0; i < element.genre_ids.length; i++) {
+              if (element.genre_ids[i] == keyId) {
+                return true;
+              }
+            }
+          }
+        });
+      } else {
+        this.displayTvShows = this.mainTvShows;
+      }
     },
   },
 };
