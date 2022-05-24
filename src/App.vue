@@ -2,13 +2,13 @@
   <div id="app">
     <AppHeader @getKeyword="searchThis($event)" />
     <main>
-      <section class="films" :class="filmsReady ? '' : 'd-none'">
+      <section class="films" v-if="filmsReady">
         <div class="section-title">
           <h2>FILMS</h2>
         </div>
         <AppFilms :filmsArray="mainFilms" />
       </section>
-      <section class="tv-shows" :class="showsReady ? '' : 'd-none'">
+      <section class="tv-shows" v-if="showsReady">
         <div class="section-title">
           <h2>TV SHOWS</h2>
         </div>
@@ -68,8 +68,8 @@ export default {
 @import "./style/common.scss";
 
 .section-title {
-  padding: 2rem 0;
-  font-size: 25px;
+  padding-top: 3rem;
+  font-size: 3rem;
   font-weight: bold;
   color: red;
   text-align: center;

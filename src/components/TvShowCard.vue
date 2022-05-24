@@ -48,7 +48,7 @@
           >Voto:
           <i
             class="fas fa-star"
-            v-for="(star, index) in starRating(parseInt(thisShow.vote_average))"
+            v-for="(star, index) in starRating(thisShow.vote_average)"
             :key="index"
           ></i>
         </strong>
@@ -76,7 +76,7 @@ export default {
   methods: {
     langFlag(lang) {
       let result;
-      let checkLang = lang.toLowerCase();
+      const checkLang = lang.toLowerCase();
       if (checkLang === "it") {
         result = "italian";
       } else if (checkLang === "en") {
@@ -92,8 +92,8 @@ export default {
     },
 
     starRating(vote) {
-      let thisArray = [];
-      const formatVote = vote / 2;
+      const thisArray = [];
+      const formatVote = parseInt(vote) / 2;
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
       }
