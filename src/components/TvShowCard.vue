@@ -1,5 +1,8 @@
 <template>
-  <li @mouseover="showInfo = true" @mouseleave="showInfo = false">
+  <li
+    @mouseover="showInfo = true"
+    @mouseleave="(showInfo = false), (showDetails = false)"
+  >
     <template v-if="thisShow.backdrop_path !== null">
       <div class="img-container">
         <img
@@ -108,6 +111,16 @@ export default {
         result = "portugues";
       } else if (checkLang === "es") {
         result = "espanol";
+      } else if (checkLang === "fr") {
+        result = "french";
+      } else if (checkLang === "hi") {
+        result = "hawaiian";
+      } else if (checkLang === "de") {
+        result = "german";
+      } else if (checkLang === "ja") {
+        result = "japanese";
+      } else if (checkLang === "no") {
+        result = "norwegian";
       } else {
         result = lang.toUpperCase();
       }
