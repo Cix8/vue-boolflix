@@ -68,9 +68,10 @@
         <strong
           >Voto:
           <i
-            class="fas fa-star"
             v-for="(star, index) in starRating(thisShow.vote_average)"
             :key="index"
+            class="fas fa-star"
+            :class="star ? 'full-star' : ''"
           ></i>
         </strong>
       </div>
@@ -133,6 +134,7 @@ export default {
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
       }
+      thisArray.length = 5;
       return thisArray;
     },
 
