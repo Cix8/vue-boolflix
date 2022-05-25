@@ -25,7 +25,6 @@
 <script>
 import AppHeader from "./components/AppHeader.vue";
 import AppContents from "./components/AppContents.vue";
-// import AppTvShows from "./components/AppTvShows.vue";
 import axios from "axios";
 
 export default {
@@ -33,7 +32,6 @@ export default {
   components: {
     AppHeader,
     AppContents,
-    // AppTvShows,
   },
   data() {
     return {
@@ -48,33 +46,47 @@ export default {
   },
   methods: {
     searchThis(keyWord) {
-      axios
-        .get(
-          `https://api.themoviedb.org/3/search/movie?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
-        )
-        .then((resp) => {
-          console.log(resp.data.results);
-          this.mainFilms = resp.data.results;
-          this.displayFilms = this.mainFilms;
-          this.filmsReady = true;
+      const req1 = axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
+      );
+      const req2 = axios.get(
+        `https://api.themoviedb.org/3/search/tv?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
+      );
+      const req3 = axios.get(
+        "https://api.themoviedb.org/3/genre/movie/list?api_key=5281cccae9a725e7baaa26749f7bb197"
+      );
+      const req4 = axios.get(
+        "https://api.themoviedb.org/3/genre/tv/list?api_key=5281cccae9a725e7baaa26749f7bb197"
+      );
+      axios.all([req1, req2, req3, req4]).then((resp) => {
+        console.log(resp[0].data.results);
+        this.mainFilms = resp[0].data.results;
+        this.displayFilms = this.mainFilms;
+
+        console.log(resp[1].data.results);
+        this.mainTvShows = resp[1].data.results;
+        this.displayTvShows = this.mainTvShows;
+
+        const movieGenresArray = resp[2].data.genres;
+        const movieGenresId = function () {
+          const result = [];
+          movieGenresArray.forEach((element) => {
+            result.push(element.id);
+          });
+          return result;
+        };
+        const showGenresArray = resp[3].data.genres;
+        const filteredShowGenres = showGenresArray.filter((element) => {
+          const thisArray = movieGenresId();
+          if (!thisArray.includes(element.id)) {
+            return true;
+          }
         });
-      axios
-        .get(
-          `https://api.themoviedb.org/3/search/tv?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
-        )
-        .then((res) => {
-          console.log(res.data.results);
-          this.mainTvShows = res.data.results;
-          this.displayTvShows = this.mainTvShows;
-          this.showsReady = true;
-        });
-      axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=5281cccae9a725e7baaa26749f7bb197"
-        )
-        .then((resp) => {
-          this.genresArray = resp.data.genres;
-        });
+        this.genresArray = movieGenresArray.concat(filteredShowGenres);
+
+        this.showsReady = true;
+        this.filmsReady = true;
+      });
     },
 
     filterContents(keyId) {
