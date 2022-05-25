@@ -6,15 +6,15 @@
       :theseGenres="genresArray"
     />
     <main>
-      <section class="films" v-if="filmsReady">
+      <section class="movies" v-if="moviesReady">
         <div class="section-title">
-          <h2>Boolflix Films</h2>
+          <h2>Boolflix Film</h2>
         </div>
-        <AppContents :contentsArray="displayFilms" />
+        <AppContents :contentsArray="displayMovies" />
       </section>
       <section class="tv-shows" v-if="showsReady">
         <div class="section-title">
-          <h2>Boolflix Tv shows</h2>
+          <h2>Boolflix Serie TV</h2>
         </div>
         <AppContents :contentsArray="displayTvShows" />
       </section>
@@ -36,18 +36,18 @@ export default {
   data() {
     return {
       genresArray: [],
-      mainFilms: [],
-      displayFilms: [],
+      mainMovies: [],
+      displayMovies: [],
       mainTvShows: [],
       displayTvShows: [],
-      filmsReady: false,
+      moviesReady: false,
       showsReady: false,
     };
   },
   methods: {
     searchThis(keyWord) {
       this.showsReady = false;
-      this.filmsReady = false;
+      this.moviesReady = false;
       const req1 = axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
       );
@@ -62,8 +62,8 @@ export default {
       );
       axios.all([req1, req2, req3, req4]).then((resp) => {
         console.log(resp[0].data.results);
-        this.mainFilms = resp[0].data.results;
-        this.displayFilms = this.mainFilms;
+        this.mainMovies = resp[0].data.results;
+        this.displayMovies = this.mainMovies;
 
         console.log(resp[1].data.results);
         this.mainTvShows = resp[1].data.results;
@@ -87,13 +87,13 @@ export default {
         this.genresArray = movieGenresArray.concat(filteredShowGenres);
 
         this.showsReady = true;
-        this.filmsReady = true;
+        this.moviesReady = true;
       });
     },
 
     filterContents(keyId) {
       if (keyId !== "") {
-        this.displayFilms = this.mainFilms.filter((element) => {
+        this.displayMovies = this.mainMovies.filter((element) => {
           if (element.genre_ids.length > 0) {
             for (let i = 0; i < element.genre_ids.length; i++) {
               if (element.genre_ids[i] == keyId) {
@@ -103,7 +103,7 @@ export default {
           }
         });
       } else {
-        this.displayFilms = this.mainFilms;
+        this.displayMovies = this.mainMovies;
       }
 
       if (keyId !== "") {

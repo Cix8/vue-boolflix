@@ -36,13 +36,15 @@
       <div class="input-search">
         <input
           type="text"
-          v-model="thisFilm"
-          @keyup.enter="$emit('getKeyword', thisFilm), (selectedGenre = '')"
+          v-model="searchTheseCotents"
+          @keyup.enter="
+            $emit('getKeyword', searchTheseCotents), (selectedGenre = '')
+          "
           placeholder="Cerca film/serieTV"
         />
         <button
           id="search-btn"
-          @click="$emit('getKeyword', thisFilm), (selectedGenre = '')"
+          @click="$emit('getKeyword', searchTheseCotents), (selectedGenre = '')"
         >
           <i class="fas fa-search"></i>
         </button>
@@ -68,7 +70,7 @@ export default {
         "La mia lista",
       ],
       activeLinkIndex: 0,
-      thisFilm: "",
+      searchTheseCotents: "",
       selectedGenre: "",
     };
   },
