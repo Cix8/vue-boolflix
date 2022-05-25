@@ -3,23 +3,25 @@
     @mouseover="showInfo = true"
     @mouseleave="(showInfo = false), (showDetails = false)"
   >
-    <template v-if="thisShow.backdrop_path !== null">
+    <template v-if="thisContent.backdrop_path !== null">
       <div class="img-container">
         <img
-          :src="'https://image.tmdb.org/t/p/original' + thisShow.backdrop_path"
+          :src="
+            'https://image.tmdb.org/t/p/original' + thisContent.backdrop_path
+          "
           alt=""
         />
       </div>
     </template>
     <template v-else>
       <div class="img-placeholder">
-        <h2>{{ thisShow.name }}</h2>
+        <h2>{{ thisContent.title ? thisContent.title : thisContent.name }}</h2>
       </div>
     </template>
     <div
       class="info"
       :class="showInfo ? '' : 'd-none'"
-      @click="findCastAndGenres(thisShow.id)"
+      @click="findCastAndGenres(thisContent)"
     >
       <div class="details" v-if="showDetails">
         <div class="cast">
@@ -37,21 +39,29 @@
       </div>
       <div class="title">
         <h2>
-          Titolo: <span>{{ thisShow.name }}</span>
+          Titolo:
+          <span>{{
+            thisContent.title ? thisContent.title : thisContent.name
+          }}</span>
         </h2>
       </div>
       <div class="original-title">
         <h2>
-          Titolo Originale: <span>{{ thisShow.original_name }}</span>
+          Titolo Originale:
+          <span>{{
+            thisContent.original_title
+              ? thisContent.original_title
+              : thisContent.original_name
+          }}</span>
         </h2>
       </div>
       <div class="lang">
-        <template v-if="langFlag(thisShow.original_language).length > 2">
+        <template v-if="langFlag(thisContent.original_language).length > 2">
           <div class="flag-container">
             <img
               :src="
                 require('../assets/img/' +
-                  langFlag(thisShow.original_language) +
+                  langFlag(thisContent.original_language) +
                   '-flag.png')
               "
               alt=""
@@ -60,24 +70,26 @@
         </template>
         <template v-else>
           <div class="text">
-            <span>Lingua: {{ thisShow.original_language.toUpperCase() }}</span>
+            <span
+              >Lingua: {{ thisContent.original_language.toUpperCase() }}</span
+            >
           </div>
         </template>
       </div>
-      <div class="rating" v-if="thisShow.vote_average">
+      <div class="rating" v-if="thisContent.vote_average">
         <strong
           >Voto:
           <i
-            v-for="(star, index) in starRating(thisShow.vote_average)"
+            v-for="(star, index) in starRating(thisContent.vote_average)"
             :key="index"
             class="fas fa-star"
             :class="star ? 'full-star' : ''"
           ></i>
         </strong>
       </div>
-      <div class="overview" v-if="thisShow.overview">
+      <div class="overview" v-if="thisContent.overview">
         <p class="bold">
-          Overview: <small>{{ thisShow.overview }}</small>
+          Overview: <small>{{ thisContent.overview }}</small>
         </p>
       </div>
     </div>
@@ -88,9 +100,9 @@
 import axios from "axios";
 
 export default {
-  name: "TvShowCard",
+  name: "ContentCard",
   props: {
-    thisShow: Object,
+    thisContent: Object,
   },
   data() {
     return {
@@ -103,7 +115,7 @@ export default {
   methods: {
     langFlag(lang) {
       let result;
-      const checkLang = lang.toLowerCase();
+      let checkLang = lang.toLowerCase();
       if (checkLang === "it") {
         result = "italian";
       } else if (checkLang === "en") {
@@ -129,7 +141,7 @@ export default {
     },
 
     starRating(vote) {
-      const thisArray = [];
+      let thisArray = [];
       const formatVote = parseInt(vote) / 2;
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
@@ -138,22 +150,40 @@ export default {
       return thisArray;
     },
 
-    findCastAndGenres(objId) {
-      axios
-        .get(
-          `https://api.themoviedb.org/3/tv/${objId}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
-        )
-        .then((resp) => {
-          this.cast = resp.data.cast.splice(0, 5);
-        });
-      axios
-        .get(
-          `https://api.themoviedb.org/3/tv/${objId}?api_key=5281cccae9a725e7baaa26749f7bb197`
-        )
-        .then((res) => {
-          this.genres = res.data.genres;
-          this.showDetails = !this.showDetails;
-        });
+    findCastAndGenres(obj) {
+      if (obj.title) {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/movie/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
+          )
+          .then((resp) => {
+            this.cast = resp.data.cast.splice(0, 5);
+          });
+        axios
+          .get(
+            `https://api.themoviedb.org/3/movie/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
+          )
+          .then((res) => {
+            this.genres = res.data.genres;
+            this.showDetails = !this.showDetails;
+          });
+      } else {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/tv/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
+          )
+          .then((resp) => {
+            this.cast = resp.data.cast.splice(0, 5);
+          });
+        axios
+          .get(
+            `https://api.themoviedb.org/3/tv/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
+          )
+          .then((res) => {
+            this.genres = res.data.genres;
+            this.showDetails = !this.showDetails;
+          });
+      }
     },
   },
 };

@@ -10,13 +10,13 @@
         <div class="section-title">
           <h2>Boolflix Films</h2>
         </div>
-        <AppFilms :filmsArray="displayFilms" />
+        <AppContents :contentsArray="displayFilms" />
       </section>
       <section class="tv-shows" v-if="showsReady">
         <div class="section-title">
           <h2>Boolflix Tv shows</h2>
         </div>
-        <AppTvShows :showsArray="displayTvShows" />
+        <AppContents :contentsArray="displayTvShows" />
       </section>
     </main>
   </div>
@@ -24,16 +24,16 @@
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
-import AppFilms from "./components/AppFilms.vue";
-import AppTvShows from "./components/AppTvShows.vue";
+import AppContents from "./components/AppContents.vue";
+// import AppTvShows from "./components/AppTvShows.vue";
 import axios from "axios";
 
 export default {
   name: "App",
   components: {
     AppHeader,
-    AppFilms,
-    AppTvShows,
+    AppContents,
+    // AppTvShows,
   },
   data() {
     return {

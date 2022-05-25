@@ -1,23 +1,23 @@
 <template>
   <ul>
-    <FilmCard
-      v-for="(element, index) in filmsArray"
+    <ContentCard
+      v-for="(element, index) in contentsArray"
       :key="index"
-      :thisFilm="element"
+      :thisContent="element"
     />
   </ul>
 </template>
 
 <script>
-import FilmCard from "./FilmCard.vue";
+import ContentCard from "./ContentCard.vue";
 
 export default {
-  name: "AppFilms",
+  name: "AppContents",
   props: {
-    filmsArray: Array,
+    contentsArray: Array,
   },
   components: {
-    FilmCard,
+    ContentCard,
   },
 };
 </script>
