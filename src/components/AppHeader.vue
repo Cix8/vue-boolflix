@@ -128,7 +128,7 @@ header {
     .input-search {
       input,
       button {
-        height: 24px;
+        height: 25px;
       }
 
       input {
