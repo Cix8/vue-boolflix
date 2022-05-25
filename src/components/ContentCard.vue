@@ -9,7 +9,7 @@
           :src="
             'https://image.tmdb.org/t/p/original' + thisContent.backdrop_path
           "
-          alt=""
+          :alt="thisContent.title ? thisContent.title : thisContent.name"
         />
       </div>
     </template>
@@ -56,15 +56,15 @@
         </h2>
       </div>
       <div class="lang">
-        <template v-if="langFlag(thisContent.original_language).length > 2">
+        <template v-if="availableFlags.includes(thisContent.original_language)">
           <div class="flag-container">
             <img
               :src="
                 require('../assets/img/' +
-                  langFlag(thisContent.original_language) +
+                  thisContent.original_language +
                   '-flag.png')
               "
-              alt=""
+              :alt="thisContent.original_language"
             />
           </div>
         </template>
@@ -108,41 +108,15 @@ export default {
     return {
       cast: [],
       genres: [],
+      availableFlags: ["de", "en", "es", "fr", "hi", "it", "ja", "no", "pt"],
       showDetails: false,
       showInfo: false,
     };
   },
   methods: {
-    langFlag(lang) {
-      let result;
-      let checkLang = lang.toLowerCase();
-      if (checkLang === "it") {
-        result = "italian";
-      } else if (checkLang === "en") {
-        result = "english";
-      } else if (checkLang === "pt") {
-        result = "portugues";
-      } else if (checkLang === "es") {
-        result = "espanol";
-      } else if (checkLang === "fr") {
-        result = "french";
-      } else if (checkLang === "hi") {
-        result = "hawaiian";
-      } else if (checkLang === "de") {
-        result = "german";
-      } else if (checkLang === "ja") {
-        result = "japanese";
-      } else if (checkLang === "no") {
-        result = "norwegian";
-      } else {
-        result = lang.toUpperCase();
-      }
-      return result;
-    },
-
     starRating(vote) {
       let thisArray = [];
-      const formatVote = parseInt(vote) / 2;
+      const formatVote = Math.round(vote / 2);
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
       }

@@ -37,9 +37,12 @@
         <input
           type="text"
           v-model="thisFilm"
-          @keyup.enter="$emit('getKeyword', thisFilm)"
+          @keyup.enter="$emit('getKeyword', thisFilm), (selectedGenre = '')"
         />
-        <button id="search-btn" @click="$emit('getKeyword', thisFilm)">
+        <button
+          id="search-btn"
+          @click="$emit('getKeyword', thisFilm), (selectedGenre = '')"
+        >
           <i class="fas fa-search"></i>
         </button>
       </div>
