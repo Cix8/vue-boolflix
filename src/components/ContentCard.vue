@@ -15,7 +15,7 @@
     </template>
     <template v-else>
       <div class="img-placeholder">
-        <h2>{{ thisContent.title ? thisContent.title : thisContent.name }}</h2>
+        <h3>{{ thisContent.title ? thisContent.title : thisContent.name }}</h3>
       </div>
     </template>
     <div
@@ -38,22 +38,22 @@
         </div>
       </div>
       <div class="title">
-        <h2>
+        <h3>
           Titolo:
           <span>{{
             thisContent.title ? thisContent.title : thisContent.name
           }}</span>
-        </h2>
+        </h3>
       </div>
       <div class="original-title">
-        <h2>
+        <h3>
           Titolo Originale:
           <span>{{
             thisContent.original_title
               ? thisContent.original_title
               : thisContent.original_name
           }}</span>
-        </h2>
+        </h3>
       </div>
       <div class="lang">
         <template v-if="availableFlags.includes(thisContent.original_language)">

@@ -128,6 +128,7 @@ export default {
 @import "./style/common.scss";
 
 #app {
+  min-width: 1150px;
   min-height: 100vh;
   padding-bottom: 3rem;
   background-image: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, 0.8));

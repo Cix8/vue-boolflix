@@ -1,9 +1,11 @@
 li {
-    $width: calc((90vw / 4) - 16px);
+    $width: calc((90vw / 4) - 8px);
     $height: calc($width + 180px);
     position: relative;
     width: $width;
     height: $height;
+    min-width: 252px;
+    min-height: 432px;
     margin: 30px 2px 0;
     border: 1px solid whitesmoke;
     cursor: pointer;
@@ -55,15 +57,21 @@ li {
             }
         }
 
-        span {
-            font-weight: lighter;
+        .title,
+        .original-title {
+            margin-bottom: .5rem;
+
+            span {
+                font-size: 1.2rem;
+                font-weight: lighter;
+            }
         }
 
         .lang {
             .flag-container {
                 width: 30px;
                 height: 30px;
-                margin: 1rem 0;
+                margin-bottom: .5rem;
 
                 img {
                     height: 100%;
