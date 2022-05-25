@@ -18,11 +18,7 @@
         <h3>{{ thisContent.title ? thisContent.title : thisContent.name }}</h3>
       </div>
     </template>
-    <div
-      class="info"
-      :class="showInfo ? '' : 'd-none'"
-      @click="findCastAndGenres(thisContent)"
-    >
+    <div class="info" v-if="showInfo" @click="findCastAndGenres(thisContent)">
       <div class="details" v-if="showDetails">
         <div class="cast">
           <div class="cast-title">Cast:</div>
@@ -83,7 +79,7 @@
             v-for="(star, index) in starRating(thisContent.vote_average)"
             :key="index"
             class="fas fa-star"
-            :class="star ? 'full-star' : ''"
+            :class="{ 'full-star': star }"
           ></i>
         </strong>
       </div>

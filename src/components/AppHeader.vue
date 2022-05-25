@@ -8,7 +8,7 @@
         <li
           v-for="(link, index) in navContents"
           :key="index"
-          :class="activeLinkIndex === index ? 'active' : ''"
+          :class="{ active: activeLinkIndex === index }"
           @click="activeLinkIndex = index"
         >
           <a>{{ link }}</a>
