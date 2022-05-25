@@ -23,7 +23,7 @@
           v-model="selectedGenre"
           @change="$emit('getSelectedGenre', selectedGenre)"
         >
-          <option value="">Tutti</option>
+          <option value="">Scegli un Genere</option>
           <option
             v-for="element in theseGenres"
             :key="element.id"
@@ -38,6 +38,7 @@
           type="text"
           v-model="thisFilm"
           @keyup.enter="$emit('getKeyword', thisFilm), (selectedGenre = '')"
+          placeholder="Cerca film/serieTV"
         />
         <button
           id="search-btn"
@@ -119,6 +120,24 @@ header {
 
       select {
         min-width: 130px;
+        height: 25px;
+        padding: 0 2px;
+      }
+    }
+
+    .input-search {
+      input,
+      button {
+        height: 24px;
+      }
+
+      input {
+        padding: 0 2px;
+      }
+
+      button {
+        padding: 0 4px;
+        cursor: pointer;
       }
     }
   }

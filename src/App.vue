@@ -46,6 +46,8 @@ export default {
   },
   methods: {
     searchThis(keyWord) {
+      this.showsReady = false;
+      this.filmsReady = false;
       const req1 = axios.get(
         `https://api.themoviedb.org/3/search/movie?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
       );
@@ -127,6 +129,7 @@ export default {
 
 #app {
   min-height: 100vh;
+  padding-bottom: 3rem;
   background-image: linear-gradient(rgb(0, 0, 0), rgba(0, 0, 0, 0.8));
 
   section {
