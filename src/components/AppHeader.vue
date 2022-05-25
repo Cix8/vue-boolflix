@@ -115,7 +115,7 @@ header {
       margin-right: 10px;
 
       select {
-        min-width: 100px;
+        min-width: 130px;
       }
     }
   }
