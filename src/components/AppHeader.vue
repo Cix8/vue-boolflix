@@ -1,8 +1,20 @@
 <template>
   <header>
-    <div class="logo-container">
-      <h1>BOOLFLIX</h1>
-    </div>
+    <nav>
+      <ul>
+        <li class="logo-container">
+          <h1>BOOLFLIX</h1>
+        </li>
+        <li
+          v-for="(link, index) in navContents"
+          :key="index"
+          :class="activeLinkIndex === index ? 'active' : ''"
+          @click="activeLinkIndex = index"
+        >
+          <a>{{ link }}</a>
+        </li>
+      </ul>
+    </nav>
     <div class="input-container">
       <div class="select-genre">
         <select
@@ -43,6 +55,15 @@ export default {
   },
   data() {
     return {
+      navContents: [
+        "Home",
+        "Serie TV",
+        "Film",
+        "Originali",
+        "Aggiunti di recente",
+        "La mia lista",
+      ],
+      activeLinkIndex: 0,
       thisFilm: "",
       selectedGenre: "",
     };
@@ -57,8 +78,34 @@ header {
   align-items: center;
   padding: 40px;
 
-  .logo-container {
-    color: red;
+  nav {
+    color: gray;
+
+    ul {
+      display: flex;
+      align-items: center;
+
+      li {
+        margin: 0 6px;
+
+        &.active {
+          color: white;
+        }
+
+        a {
+          cursor: pointer;
+        }
+      }
+
+      .logo-container {
+        font-size: 25px;
+        color: red;
+      }
+
+      .logo-container + li {
+        margin-left: 30px;
+      }
+    }
   }
 
   .input-container {
