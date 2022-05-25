@@ -152,37 +152,31 @@ export default {
 
     findCastAndGenres(obj) {
       if (obj.title) {
-        axios
-          .get(
-            `https://api.themoviedb.org/3/movie/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
-          )
-          .then((resp) => {
-            this.cast = resp.data.cast.splice(0, 5);
-          });
-        axios
-          .get(
-            `https://api.themoviedb.org/3/movie/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
-          )
-          .then((res) => {
-            this.genres = res.data.genres;
-            this.showDetails = !this.showDetails;
-          });
+        const req1 = axios.get(
+          `https://api.themoviedb.org/3/movie/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
+        );
+        const req2 = axios.get(
+          `https://api.themoviedb.org/3/movie/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
+        );
+
+        axios.all([req1, req2]).then((resp) => {
+          this.cast = resp[0].data.cast.splice(0, 5);
+          this.genres = resp[1].data.genres;
+          this.showDetails = !this.showDetails;
+        });
       } else {
-        axios
-          .get(
-            `https://api.themoviedb.org/3/tv/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
-          )
-          .then((resp) => {
-            this.cast = resp.data.cast.splice(0, 5);
-          });
-        axios
-          .get(
-            `https://api.themoviedb.org/3/tv/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
-          )
-          .then((res) => {
-            this.genres = res.data.genres;
-            this.showDetails = !this.showDetails;
-          });
+        const req1 = axios.get(
+          `https://api.themoviedb.org/3/tv/${obj.id}/credits?api_key=5281cccae9a725e7baaa26749f7bb197`
+        );
+        const req2 = axios.get(
+          `https://api.themoviedb.org/3/tv/${obj.id}?api_key=5281cccae9a725e7baaa26749f7bb197`
+        );
+
+        axios.all([req1, req2]).then((resp) => {
+          this.cast = resp[0].data.cast.splice(0, 5);
+          this.genres = resp[1].data.genres;
+          this.showDetails = !this.showDetails;
+        });
       }
     },
   },
