@@ -3,12 +3,10 @@
     @mouseover="showInfo = true"
     @mouseleave="(showInfo = false), (showDetails = false)"
   >
-    <template v-if="thisContent.backdrop_path !== null">
+    <template v-if="thisContent.poster_path !== null">
       <div class="img-container">
         <img
-          :src="
-            'https://image.tmdb.org/t/p/original' + thisContent.backdrop_path
-          "
+          :src="'https://image.tmdb.org/t/p/original' + thisContent.poster_path"
           :alt="thisContent.title ? thisContent.title : thisContent.name"
         />
       </div>
