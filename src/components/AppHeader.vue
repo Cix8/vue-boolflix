@@ -38,7 +38,9 @@
           type="text"
           v-model="searchTheseCotents"
           @keyup.enter="
-            $emit('getKeyword', searchTheseCotents), (selectedGenre = '')
+            searchTheseCotents.trim() !== ''
+              ? ($emit('getKeyword', searchTheseCotents), (selectedGenre = ''))
+              : (searchTheseCotents = '')
           "
           placeholder="Cerca film/serieTV"
         />
