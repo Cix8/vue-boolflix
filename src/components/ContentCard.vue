@@ -18,7 +18,14 @@
           </h3>
         </div>
       </template>
-      <div class="info" @click="findCastAndGenres(thisContent)">
+      <div
+        class="info"
+        @click="
+          showDetails === false
+            ? findCastAndGenres(thisContent)
+            : (showDetails = false)
+        "
+      >
         <div class="details" v-if="showDetails">
           <div class="cast">
             <div class="cast-title">Cast:</div>

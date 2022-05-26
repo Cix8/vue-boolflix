@@ -44,6 +44,32 @@ export default {
       showsReady: false,
     };
   },
+  created() {
+    const req1 = axios.get(
+      "https://api.themoviedb.org/3/genre/movie/list?api_key=5281cccae9a725e7baaa26749f7bb197"
+    );
+    const req2 = axios.get(
+      "https://api.themoviedb.org/3/genre/tv/list?api_key=5281cccae9a725e7baaa26749f7bb197"
+    );
+    axios.all([req1, req2]).then((resp) => {
+      const movieGenresArray = resp[0].data.genres;
+      const movieGenresId = function () {
+        const result = [];
+        movieGenresArray.forEach((element) => {
+          result.push(element.id);
+        });
+        return result;
+      };
+      const showGenresArray = resp[1].data.genres;
+      const filteredShowGenres = showGenresArray.filter((element) => {
+        const thisArray = movieGenresId();
+        if (!thisArray.includes(element.id)) {
+          return true;
+        }
+      });
+      this.genresArray = movieGenresArray.concat(filteredShowGenres);
+    });
+  },
   methods: {
     searchThis(keyWord) {
       this.showsReady = false;
@@ -54,13 +80,8 @@ export default {
       const req2 = axios.get(
         `https://api.themoviedb.org/3/search/tv?api_key=5281cccae9a725e7baaa26749f7bb197&query=${keyWord}`
       );
-      const req3 = axios.get(
-        "https://api.themoviedb.org/3/genre/movie/list?api_key=5281cccae9a725e7baaa26749f7bb197"
-      );
-      const req4 = axios.get(
-        "https://api.themoviedb.org/3/genre/tv/list?api_key=5281cccae9a725e7baaa26749f7bb197"
-      );
-      axios.all([req1, req2, req3, req4]).then((resp) => {
+
+      axios.all([req1, req2]).then((resp) => {
         console.log(resp[0].data.results);
         this.mainMovies = resp[0].data.results;
         this.displayMovies = this.mainMovies;
@@ -68,23 +89,6 @@ export default {
         console.log(resp[1].data.results);
         this.mainTvShows = resp[1].data.results;
         this.displayTvShows = this.mainTvShows;
-
-        const movieGenresArray = resp[2].data.genres;
-        const movieGenresId = function () {
-          const result = [];
-          movieGenresArray.forEach((element) => {
-            result.push(element.id);
-          });
-          return result;
-        };
-        const showGenresArray = resp[3].data.genres;
-        const filteredShowGenres = showGenresArray.filter((element) => {
-          const thisArray = movieGenresId();
-          if (!thisArray.includes(element.id)) {
-            return true;
-          }
-        });
-        this.genresArray = movieGenresArray.concat(filteredShowGenres);
 
         this.showsReady = true;
         this.moviesReady = true;
