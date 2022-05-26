@@ -1,5 +1,12 @@
 <template>
-  <li @mouseleave="showDetails = false">
+  <li
+    @mouseleave="showDetails = false"
+    @click="
+      showDetails === false
+        ? findCastAndGenres(thisContent)
+        : (showDetails = !showDetails)
+    "
+  >
     <div class="card-contents">
       <template v-if="thisContent.poster_path !== null">
         <div class="img-container">
@@ -18,14 +25,7 @@
           </h3>
         </div>
       </template>
-      <div
-        class="info"
-        @click="
-          showDetails === false
-            ? findCastAndGenres(thisContent)
-            : (showDetails = !showDetails)
-        "
-      >
+      <div class="info">
         <div class="details" v-if="showDetails">
           <div class="cast">
             <div class="cast-title">Cast:</div>
