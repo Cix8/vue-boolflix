@@ -44,7 +44,11 @@
         />
         <button
           id="search-btn"
-          @click="$emit('getKeyword', searchTheseCotents), (selectedGenre = '')"
+          @click="
+            searchTheseCotents.trim() !== ''
+              ? ($emit('getKeyword', searchTheseCotents), (selectedGenre = ''))
+              : (searchTheseCotents = '')
+          "
         >
           <i class="fas fa-search"></i>
         </button>
