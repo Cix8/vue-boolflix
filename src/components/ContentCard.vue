@@ -23,7 +23,7 @@
         @click="
           showDetails === false
             ? findCastAndGenres(thisContent)
-            : (showDetails = false)
+            : (showDetails = !showDetails)
         "
       >
         <div class="details" v-if="showDetails">
