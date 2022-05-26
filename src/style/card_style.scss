@@ -7,97 +7,110 @@ li {
     min-width: 252px;
     min-height: 432px;
     margin: 30px 2px 0;
-    border: 1px solid whitesmoke;
     cursor: pointer;
+    perspective: 1000px;
 
-    .img-container {
+    &:hover .card-contents {
+        transform: rotateY(180deg);
+    }
+
+    .card-contents {
         height: 100%;
+        border: 1.5px solid whitesmoke;
+        transform-style: preserve-3d;
+        transition: transform .6s linear;
 
-        img {
+        .img-container {
             height: 100%;
-            display: block;
-            object-fit: cover;
+
+            img {
+                height: 100%;
+                display: block;
+                object-fit: cover;
+            }
         }
-    }
 
-    .img-placeholder {
-        height: 100%;
-        padding: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 2rem;
-        color: red;
-    }
-
-    .info {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.6);
-        color: white;
-
-        .details {
+        .img-placeholder {
+            height: 100%;
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-
-            .cast-title,
-            .genre-title {
-                font-size: 1.1rem;
-                font-weight: bolder;
-            }
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 2rem;
+            color: red;
         }
 
-        .title,
-        .original-title {
-            margin-bottom: .5rem;
+        .info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
 
-            span {
-                font-size: 1.2rem;
-                font-weight: lighter;
+            .details {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px 0;
+
+                .cast-title,
+                .genre-title {
+                    font-size: 1.1rem;
+                    font-weight: bolder;
+                }
             }
-        }
 
-        .lang {
-            .flag-container {
-                width: 30px;
-                height: 30px;
+            .title,
+            .original-title {
                 margin-bottom: .5rem;
 
-                img {
-                    height: 100%;
-                    object-fit: contain;
+                span {
+                    font-size: 1.2rem;
+                    font-weight: lighter;
                 }
             }
 
-            .text {
-                margin: 1rem 0;
-            }
-        }
+            .lang {
+                .flag-container {
+                    width: 30px;
+                    height: 30px;
+                    margin-bottom: .5rem;
 
-        .rating {
-            margin-bottom: 1rem;
+                    img {
+                        height: 100%;
+                        object-fit: contain;
+                    }
+                }
 
-            i {
-                margin: 0 2px;
-
-                &.full-star {
-                    color: yellow;
+                .text {
+                    margin: 1rem 0;
                 }
             }
-        }
 
-        .overview {
-            max-height: 300px;
-            overflow-y: auto;
+            .rating {
+                margin-bottom: 1rem;
+
+                i {
+                    margin: 0 2px;
+
+                    &.full-star {
+                        color: yellow;
+                    }
+                }
+            }
+
+            .overview {
+                max-height: 300px;
+                overflow-y: auto;
+            }
         }
     }
 }
