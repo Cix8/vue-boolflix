@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     starRating(vote) {
-      let thisArray = [];
+      const thisArray = [];
       const formatVote = Math.round(vote / 2);
       for (let i = 0; i < formatVote; i++) {
         thisArray.push("star");
