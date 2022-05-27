@@ -7,15 +7,9 @@
     />
     <main>
       <section class="movies" v-if="moviesReady">
-        <div class="section-title">
-          <h2>Boolflix Film</h2>
-        </div>
         <AppContents :contentsArray="displayMovies" />
       </section>
       <section class="tv-shows" v-if="showsReady">
-        <div class="section-title">
-          <h2>Boolflix Serie TV</h2>
-        </div>
         <AppContents :contentsArray="displayTvShows" />
       </section>
     </main>
@@ -140,13 +134,6 @@ export default {
   section {
     width: 90%;
     margin: 0 auto;
-
-    .section-title {
-      padding-top: 3rem;
-      font-size: 2rem;
-      font-weight: bold;
-      color: white;
-    }
   }
 }
 </style>
